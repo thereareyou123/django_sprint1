@@ -60,7 +60,5 @@ def post_details(request, post_id):
 
 
 def category_posts(request, category_slug):
-    sort_posts = [post for post in posts if post['category']
-                  == category_slug]
     context = {'category': category_slug}
     return render(request, 'blog/category.html', context)
