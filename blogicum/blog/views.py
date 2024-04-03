@@ -1,6 +1,5 @@
-from django.shortcuts import render
-
 from django.http import Http404
+from django.shortcuts import render
 
 posts = [
     {
@@ -45,7 +44,7 @@ posts = [
     },
 ]
 
-dict_posts = {post['id']: post for post in posts}
+posts_by_id = {post['id']: post for post in posts}
 
 
 def index(request):
@@ -54,15 +53,14 @@ def index(request):
 
 
 def post_details(request, post_id):
-    if post_id not in dict_posts:
+    if post_id not in posts_by_id:
         raise Http404('Указан неверный id')
-    context = {'post': dict_posts[post_id]}
+    context = {'post': posts_by_id[post_id]}
     return render(request, 'blog/detail.html', context)
 
 
 def category_posts(request, category_slug):
     sort_posts = [post for post in posts if post['category']
                   == category_slug]
-    context = {'category': category_slug,
-               'posts': sort_posts}
+    context = {'category': category_slug}
     return render(request, 'blog/category.html', context)
